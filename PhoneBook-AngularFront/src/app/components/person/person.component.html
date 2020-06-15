@@ -1,0 +1,115 @@
+<div>
+  <h3 >{{message}}</h3>
+</div>
+<form [formGroup]="this.personNewForm" (ngSubmit)="submitFormNewPerson()" novalidate *ngIf="this.enableForm=='new'">
+  <div >
+    <label>FirstName</label>
+    <input type="text" formControlName="firstName" required/>
+  </div>
+  <div >
+    <label>LastName</label>`
+    <input type="text" formControlName="lastName" required/>
+  </div>
+  <div >
+    <label>Age</label>
+    <input type="text" formControlName="age" required/>
+  </div>
+  <div  *ngIf="genderList">
+    <label>Gender</label>
+    <select formControlName="gender" required>
+      <option value="">Please select gender</option>
+      <option *ngFor="let gender of genderList"
+              [value]="gender.name">
+        {{gender.name}}
+      </option>
+    </select>
+  </div>
+  <button type="submit" >Submit</button>
+  <button (click)="disableForm()" >Cancel</button>
+  <br>
+  <br>
+</form>
+
+
+
+<form [formGroup]="this.personEditForm" (ngSubmit)="submitFormEditPerson()" novalidate *ngIf="this.enableForm=='edit'">
+  <div >
+    <label>FirstName</label>
+    <input type="text" formControlName="firstName"/>
+  </div>
+  <div >
+    <label>LastName</label>
+    <input type="text" formControlName="lastName" />
+  </div>
+  <div >
+    <label>Age</label>
+    <input type="text" formControlName="age" />
+  </div>
+  <div  *ngIf="genderList">
+    <label>Gender</label>
+    <select formControlName="gender" >
+      <option value="">Please select gender</option>
+      <option *ngFor="let gender of genderList"
+              [value]="gender.name">
+        {{gender.name}}
+      </option>
+    </select>
+  </div>
+  <button type="submit" >Submit</button>
+  <button (click)="disableForm()" >Cancel</button>
+  <br>
+  <br>
+</form>
+
+
+<div>
+  <button (click)="this.createFormNewPerson()" >New Person</button>
+  <button (click)="this.getAllPerson()" >Refresh List All Person</button>
+  <button (click)="this.getPersonWithPhone()" >Refresh List All Person With Phone</button>
+  <br>
+  <br>
+</div>
+<div>
+  <table border="1">
+    <tr>
+      <th > -Action-For-Person-</th>
+      <th> -Id- </th>
+      <th> -First-name- <br> -Last-name- </th>
+      <th> -Age- <br> -Gender- </th>
+      <th colspan="9"> -Phones- </th>
+    </tr>
+    <tr *ngFor="let person of personList" align="center">
+      <td >
+        <button (click)="this.createFormEditPerson(person)" >Edit</button>
+        <button (click)="this.deletePerson(person)">Delete</button>
+      </td>
+      <td>
+        {{person.id}}
+      </td>
+      <td>
+        {{person.firstName}}<br>
+        {{person.lastName}}
+      </td>
+      <td>
+        {{person.age}}<br>
+        {{person.gender.name}}
+      </td>
+      <td width="125" height="46">
+        <div *ngIf="this.enableFormPhone=='none'">
+          <button (click)="this.createFormNewPhone(person.id)" >Add</button>
+          <button (click)="this.deleteAllPhoneByPersonId(person.id)" >Remove All</button>
+        </div>
+        <form [formGroup]="this.phoneNewForm" (ngSubmit)="submitFormNewPhone()" novalidate *ngIf="this.enableFormPhone==person.id">
+          <input type="text" formControlName="number" size="12" required/>
+          <br>
+          <button type="submit">Send</button>
+          <button (click)="disableFormPhone()">Cancel</button>
+        </form>
+      </td>
+      <td *ngFor="let phone of person.phones" width="125" height="46">
+        {{phone.number}}
+        <button (click)="this.deletePhone(phone.id)" >X</button>
+      </td>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,41 @@
+PATCH http://localhost:8080/person
+Content-Type: application/json
+
+{
+  "id":3,
+  "age":36,
+  "gender": { "name":"M" }
+}
+
+###
+POST http://localhost:8080/person
+Content-Type: application/json
+
+{
+  "firstName":"yyyy",
+  "lastName":"yyyy",
+  "age":22,
+  "gender": { "name":"M" }
+}
+
+###
+DELETE http://localhost:8080/person
+Content-Type: application/json
+
+{
+  "id":3
+}
+
+###
+GET http://localhost:8080/person/phone
+Accept: application/json
+
+###
+GET http://localhost:8080/person/
+Accept: application/json
+
+###
+GET http://localhost:8080/person/2
+Accept: application/json
+
+###

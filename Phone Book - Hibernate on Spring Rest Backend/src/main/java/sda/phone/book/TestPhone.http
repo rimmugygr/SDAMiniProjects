@@ -1,0 +1,48 @@
+POST http://localhost:8080/phone
+Content-Type: application/json
+
+{
+  "number":"1234",
+  "person":{"id":9}
+}
+
+###
+POST http://localhost:8080/phone/6666/person/15
+Content-Type: application/json
+
+{
+"number":"1234",
+"person":{"id":9}
+}
+
+###
+PATCH http://localhost:8080/phone
+Content-Type: application/json
+
+{
+  "id":"8",
+  "number":"123456",
+  "person":{"id":2}
+}
+
+###
+DELETE http://localhost:8080/phone
+Content-Type: application/json
+
+{
+  "id":"8"
+}
+
+###
+GET http://localhost:8080/phone/
+Accept: application/json
+
+###
+GET http://localhost:8080/phone/person/15
+Accept: application/json
+
+###
+GET http://localhost:8080/phone/12
+Accept: application/json
+
+###
