@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sda.phone.book.model.Person;
 import sda.phone.book.model.Phone;
+import sda.phone.book.repository.PersonRepo;
 import sda.phone.book.repository.PhoneRepo;
 
 import java.util.List;
@@ -14,9 +15,11 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 public class PhoneController {
     PhoneRepo phoneRepo;
+  PersonRepo personRepo;
 
-    public PhoneController(PhoneRepo phoneRepo) {
+    public PhoneController(PhoneRepo phoneRepo, PersonRepo personRepo) {
         this.phoneRepo = phoneRepo;
+        this.personRepo = personRepo;
     }
 
     @GetMapping
@@ -32,7 +35,7 @@ public class PhoneController {
 
     @GetMapping("/{id}")
     public Phone getPhone(@PathVariable(name = "id") long id) {
-        return phoneRepo.getPhoneById(id);
+        return                 phoneRepo.getPhoneById(id);
     }
 
     @PostMapping("/{number}/person/{id}")
@@ -43,7 +46,8 @@ public class PhoneController {
 
     @GetMapping("/person/{id}")
     public List<Phone> getAllPhonesByPersonId(@PathVariable(name = "id") long id) {
-        return phoneRepo.getAllPhonesByPersonId(id);
+        return personRepo.getPersonById(id).getPhones();
+                //phoneRepo.getAllPhonesByPersonId(id);
     }
 
     @PatchMapping

@@ -80,9 +80,11 @@ public class PhoneRepo {
     }
 
     public void addNumberToPerson(String number, long id) {
-        Phone phone = new Phone(number,new Person(id));
+
         try (Session session = hibernateSession.getSession()){
             Transaction transaction = session.beginTransaction();
+            Person people = session.get(Person.class,id);
+            Phone phone = new Phone(number,people);
             session.save(phone);
             transaction.commit();
         }

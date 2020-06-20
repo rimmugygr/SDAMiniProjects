@@ -16,7 +16,7 @@ import java.util.Properties;
 
 @Service
 public class HibernateSession {
-    private String URL ="jdbc:mysql://localhost:3306/hibernate";
+    private String URL ="jdbc:mysql://localhost:3306/hibernate?serverTimezone=UTC";
     private String USER = "root";
     private String PASSWORD = "admin";
     private SessionFactory sessionFactory;
@@ -30,6 +30,9 @@ public class HibernateSession {
         settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
         //settings.put(Environment.HBM2DDL_AUTO, "create-drop");
         settings.put(Environment.HBM2DDL_AUTO, "update");
+        settings.put(Environment.DRIVER, "com.mysql.jdbc.Driver");
+        settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
+
         return settings;
     }
     private SessionFactory createSessionFactory() {

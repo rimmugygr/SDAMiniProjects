@@ -102,7 +102,7 @@ public class PersonRepo {
         try(Session session = hibernateSession.getSession()){
             Transaction transaction = session.beginTransaction();
             Person personInDB = session.get(Person.class,person.getId());
-            personInDB.getPhones().forEach(session::delete);
+            //personInDB.getPhones().forEach(session::delete);
             session.delete(personInDB);
             transaction.commit();
         }
@@ -111,7 +111,9 @@ public class PersonRepo {
     public List<Person> getAllPersonWithPhone() {
         Session session = hibernateSession.getSession();
         List<Person> people = session
-                .createQuery("select distinct p from Person p join Phone ph on p.id = ph.person.id").list();
+                //.createQuery("select distinct p.person from Phone p ").list();
+                .createQuery("FROM Person p WHERE size(p.phones) > 0").list();
+                //.createQuery("select distinct p from Person p join Phone ph on p.id = ph.person.id").list();
         session.close();
         return people;
     }
