@@ -1,0 +1,20 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+
+<!-- Footer -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Your Website 2020         </span>
+
+            ${pageContext.request.servletPath}3+<br>
+            ${pageContext.request.requestURI}4+<br>
+
+        </div>
+    </div>
+
+
+
+
+</footer>
+<!-- End of Footer -->
