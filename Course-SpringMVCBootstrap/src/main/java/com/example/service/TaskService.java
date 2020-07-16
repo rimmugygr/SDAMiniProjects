@@ -31,7 +31,6 @@ public class TaskService {
         Task newTask = new Task(
                 task.getLevel(),
                 task.getDeadline(),
-                LocalDate.now(),
                 task.getContent(),
                 person);
         taskRepo.save(newTask);
@@ -44,9 +43,9 @@ public class TaskService {
     public void editTask(Task task, Long id) {
         Task editTask = new Task(
                 id,
+                task.getCreateDate(),
                 task.getLevel(),
                 task.getDeadline(),
-                task.getCreateDate(),
                 task.getContent(),
                 task.getPerson()
         );

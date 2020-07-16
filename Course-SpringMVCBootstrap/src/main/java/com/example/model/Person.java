@@ -3,11 +3,7 @@ package com.example.model;
 import javax.persistence.*;
 
 @Entity
-@Table
-public class Person {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class Person extends BaseEntity {
     private String firstName;
     private String lastName;
     private String github;
@@ -37,7 +33,7 @@ public class Person {
                   Integer java, Integer bestpractice, Integer tdd, Integer question,
                   Integer hibernate, Integer html, Integer jsp, Integer thymeleaf,
                   Integer git, Integer checkBox) {
-        this.id = id;
+        super(id);
         this.firstName = firstName;
         this.lastName = lastName;
         this.github = github;
@@ -134,14 +130,6 @@ public class Person {
         this.checkBox = checkBox;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -174,12 +162,10 @@ public class Person {
         this.start = start;
     }
 
-
     @Override
     public String toString() {
         return "Person{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
+                "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", github='" + github + '\'' +
                 ", start='" + start + '\'' +
@@ -193,6 +179,6 @@ public class Person {
                 ", thymeleaf=" + thymeleaf +
                 ", git=" + git +
                 ", checkBox=" + checkBox +
-                '}';
+                "} " + super.toString();
     }
 }
