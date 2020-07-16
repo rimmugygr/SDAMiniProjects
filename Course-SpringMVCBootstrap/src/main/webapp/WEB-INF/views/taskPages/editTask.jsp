@@ -48,8 +48,7 @@
               <div class="form-group row">
                 <label for="createDate" class="col-sm-2 col-form-label">Create Date</label>
                 <div class="col-sm-10">
-                  <input type="date" readonly name="createDate" id="createDate" value="${task.createDate}" max="3000-12-31"
-                         min="1000-01-01" class="form-control">
+                  <input type="text"  readonly name="createDate" id="createDate" value="${task.createDate}" class="form-control">
                 </div>
               </div>
 

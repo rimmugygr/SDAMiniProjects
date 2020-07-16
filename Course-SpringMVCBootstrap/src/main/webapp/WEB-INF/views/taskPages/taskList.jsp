@@ -102,13 +102,16 @@
                           <c:when test="${task.level eq 'senior'}">border-left-danger text-danger</c:when>
                       </c:choose> ">
                   <div class="card-body">
-                    <div class="row  small">
+                    <div class="row">
                         ${task.person.firstName} ${task.person.lastName}
-                      | <strong> Dodano: </strong> ${task.createDate}
-                      | <strong> Deadline: </strong> ${task.deadline}
+                        | <strong> Dodano: </strong> ${task.createDate}
+                        | <strong> Deadline: </strong> ${task.deadline}
                     </div>
                     <div class="row text-dark">
-                        <pre>${task.content}</pre>
+                      <pre>${task.content}</pre>
+                    </div>
+                    <div class="row">
+                      <small class="font-weight-light text-center">Last update: ${task.updateDate}</small>
                     </div>
                   </div>
                   <a class="stretched-link" href="<c:url value="/edittask/${task.id}"/>" ></a>

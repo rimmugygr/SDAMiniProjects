@@ -16,12 +16,12 @@ public class BaseEntity {
     @Id
     @GeneratedValue
     private Long id;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal( TemporalType.DATE )
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.S")
+    @Temporal( TemporalType.TIMESTAMP)
     @UpdateTimestamp
     private Date updateDate;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal( TemporalType.DATE )
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.S")
+    @Temporal( TemporalType.TIMESTAMP )
     @CreationTimestamp
     private Date createDate;
 
