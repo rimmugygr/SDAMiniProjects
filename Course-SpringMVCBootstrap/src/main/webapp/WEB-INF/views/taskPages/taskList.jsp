@@ -99,58 +99,46 @@
         <%--   right column with task       --%>
         <div class="col-lg-10">
 
-
-          <div class="table table-sm">
-            <table class="table action-panel table-borderless" id="dataTableTasks" width="100%" cellspacing="0">
-              <thead>
-              <tr>
-                <th></th>
+          <div class="table table-sm mb-0">
+            <table class="table action-panel table-borderless mt-0" id="dataTableTasks" width="100%" cellspacing="0">
+              <thead >
+              <tr >
+                <th style="width: 0px; height: 0; padding: 0; margin: 0" ></th>
               </tr>
               </thead>
-              <tfoot>
-              <tr>
-                <th></th>
-              </tr>
-              </tfoot>
-              <tbody>
-                <c:forEach  items="${tasks}" var ="task">
-              <tr>
-                <td>
-
-            <div class="row">
-              <div class="col">
-                <div class="card  shadow mb-4
-                      <c:choose>
-                          <c:when test="${task.level eq 'junior'}">border-left-success text-success</c:when>
-                          <c:when test="${task.level eq 'juniorPlus'}">border-left-info text-info</c:when>
-                          <c:when test="${task.level eq 'mid'}">border-left-secondary text-secondary</c:when>
-                          <c:when test="${task.level eq 'midPlus'}">border-left-primary text-primary</c:when>
-                          <c:when test="${task.level eq 'senior'}">border-left-danger text-danger</c:when>
-                      </c:choose> ">
-                  <div class="card-body">
+              <c:forEach  items="${tasks}" var ="task">
+                <tr>
+                  <td style="padding: 0; margin: 0"  class="m-0">
                     <div class="row">
-                        ${task.person.firstName} ${task.person.lastName}
-                        | <strong> Dodano: </strong> ${task.createDate}
-                        | <strong> Deadline: </strong> ${task.deadline}
+                      <div class="col">
+                        <div class="card  shadow mb-4
+                              <c:choose>
+                                  <c:when test="${task.level eq 'junior'}">border-left-success text-success</c:when>
+                                  <c:when test="${task.level eq 'juniorPlus'}">border-left-info text-info</c:when>
+                                  <c:when test="${task.level eq 'mid'}">border-left-secondary text-secondary</c:when>
+                                  <c:when test="${task.level eq 'midPlus'}">border-left-primary text-primary</c:when>
+                                  <c:when test="${task.level eq 'senior'}">border-left-danger text-danger</c:when>
+                              </c:choose> ">
+                          <div class="card-body">
+                            <div class="row">
+                                ${task.person.firstName} ${task.person.lastName}
+                                | <strong> Dodano: </strong> ${task.createDate}
+                                | <strong> Deadline: </strong> ${task.deadline}
+                            </div>
+                            <div class="row text-dark">
+                              <pre>${task.content}</pre>
+                            </div>
+                            <div class="row">
+                              <small class="font-weight-light text-center">Last update: ${task.updateDate}</small>
+                            </div>
+                          </div>
+                          <a class="stretched-link" href="<c:url value="/edittask/${task.id}"/>" ></a>
+                        </div>
+                      </div>
                     </div>
-                    <div class="row text-dark">
-                      <pre>${task.content}</pre>
-                    </div>
-                    <div class="row">
-                      <small class="font-weight-light text-center">Last update: ${task.updateDate}</small>
-                    </div>
-                  </div>
-                  <a class="stretched-link" href="<c:url value="/edittask/${task.id}"/>" ></a>
-                </div>
-              </div>
-            </div>
-                </td>
-              </tr>
-
-          </c:forEach>
-
-
-              </tbody>
+                  </td>
+                </tr>
+              </c:forEach>
             </table>
           </div>
 

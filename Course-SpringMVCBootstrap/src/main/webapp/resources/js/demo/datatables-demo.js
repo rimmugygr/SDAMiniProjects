@@ -21,7 +21,7 @@ $(document).ready(function () {
     $('table.action-panel').each(function (index, object) {
         $('#dataTablePersons').DataTable({
             dom: 'Bfrtip',
-            "pageLength": 10,
+            "pageLength": 5,
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'
             ]
