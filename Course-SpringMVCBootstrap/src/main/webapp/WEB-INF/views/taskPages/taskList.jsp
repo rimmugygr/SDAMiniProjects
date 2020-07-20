@@ -23,9 +23,9 @@
       <!-- Content Row -->
 
       <%--  button row   --%>
-      <div class="row shadow mb-4">
-        <div class="col-lg-12">
-          <a href="<c:url value="/addtask"/>" class="btn btn-warning btn-block">
+      <div class="row ">
+        <div class="col-lg-12 ">
+          <a href="<c:url value="/addtask"/>" class="btn btn-warning btn-block shadow mb-4">
             <i class="fas fa-exclamation-triangle"></i>
             <span class="text"> Dodaj taska</span>
           </a>
@@ -84,13 +84,39 @@
               </div>
             </div>
           </div>
+          <div class="card bg-dark text-white shadow">
+            <div class="card-body">
+              <div class="col">
+                <span class="row h5" >Wszystkie</span>
+                <span class="small row">Od juniora do senior</span>
+                <a class="stretched-link" href=" <c:url value="/task/"/> "></a>
+              </div>
+            </div>
+          </div>
         </div>
         <%--  end left column with level    --%>
 
         <%--   right column with task       --%>
         <div class="col-lg-10">
 
-          <c:forEach  items="${tasks}" var ="task">
+
+          <div class="table table-sm">
+            <table class="table action-panel table-borderless" id="dataTableTasks" width="100%" cellspacing="0">
+              <thead>
+              <tr>
+                <th></th>
+              </tr>
+              </thead>
+              <tfoot>
+              <tr>
+                <th></th>
+              </tr>
+              </tfoot>
+              <tbody>
+                <c:forEach  items="${tasks}" var ="task">
+              <tr>
+                <td>
+
             <div class="row">
               <div class="col">
                 <div class="card  shadow mb-4
@@ -118,10 +144,24 @@
                 </div>
               </div>
             </div>
+                </td>
+              </tr>
+
           </c:forEach>
 
+
+              </tbody>
+            </table>
+          </div>
+
         </div>
-          <%--   end right column with task       --%>
+
+
+
+
+
+
+        <%--   end right column with task       --%>
 
       </div>
       <%-- end card row  --%>
@@ -137,3 +177,71 @@
 <%@include file="../dynamic/script.jspf"%>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

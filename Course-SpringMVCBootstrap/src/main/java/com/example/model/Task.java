@@ -1,12 +1,7 @@
 package com.example.model;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -20,6 +15,7 @@ public class Task extends BaseEntity{
     @Lob
     private String content;
     @ManyToOne(targetEntity = Person.class)
+    @JoinColumn(name="person_id")
     private Person person;
 
     public Task() {

@@ -13,10 +13,12 @@ import java.util.List;
 @Repository
 public interface TaskRepo extends JpaRepository<Task,Long> {
 
-    @Override
-    @Query("select distinct t from Task t join fetch t.person")
-    List<Task> findAll();
+//    @Override
+//    @Query("select distinct t from Task t join fetch t.person")
+//    List<Task> findAll();
+//    @Query("select distinct t from Task t join fetch t.person WHERE t.level = :level")
+//    List<Task> findAllByLevel(@Param("level") Level level);
 
-    @Query("select distinct t from Task t join fetch t.person WHERE t.level = :level")
-    List<Task> findAllByLevel(@Param("level") Level level);
+    List<Task> findAllByLevel(Level level);
+
 }
