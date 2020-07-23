@@ -101,7 +101,7 @@
       <div class="jumbotron">
         <h1 class="display-4">Projekt zajeciowy</h1>
         <p class="lead">Bootstrap + ASP + Spring Boot + MySQL</p>
-        <p class="lead">Dzisiaj jest : Data</p>
+        <p class="lead">Dzisiaj jest : <fmt:formatDate value="${now}" pattern="MM.dd.yyyy" /></p>
       </div>
     </div>
     <!-- End of Main Content -->

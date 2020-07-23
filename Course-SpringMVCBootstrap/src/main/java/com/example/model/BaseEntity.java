@@ -11,7 +11,7 @@ import java.util.Date;
 
 //@Entity
 //@Inheritance( strategy = InheritanceType.JOINED)// mapped to relational database object
-@MappedSuperclass
+@MappedSuperclass // not entity
 public class BaseEntity {
     @Id
     @GeneratedValue

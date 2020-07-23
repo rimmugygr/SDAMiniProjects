@@ -44,7 +44,7 @@
                 <label for="deadline" class="col-sm-2 col-form-label">Deadline</label>
                 <div class="col-sm-10">
                   <input type="date" name="deadline" id="deadline" max="3000-12-31"
-                         min="1000-01-01" class="form-control">
+                         min="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" />" class="form-control">
                 </div>
               </div>
 

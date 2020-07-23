@@ -1,19 +1,27 @@
 package com.example.model;
 
+import org.hibernate.annotations.ResultCheckStyle;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
+import javax.validation.constraints.Future;
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
-@Table
+@SQLDelete(sql = "update task set deleted = true where id = ?", check = ResultCheckStyle.COUNT)
+@Where(clause = "deleted <> true")
 public class Task extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private Level level;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal( TemporalType.DATE )
+    @Future
     private Date deadline;
     @Lob
     private String content;
+    private boolean deleted;
     @ManyToOne(targetEntity = Person.class)
     @JoinColumn(name="person_id")
     private Person person;
@@ -66,6 +74,14 @@ public class Task extends BaseEntity{
 
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Override
