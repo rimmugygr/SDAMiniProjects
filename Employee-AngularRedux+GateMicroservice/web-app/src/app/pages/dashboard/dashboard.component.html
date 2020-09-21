@@ -1,0 +1,109 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
+
+  <a class="navbar-brand" href="/">LOGO</a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mx-auto">
+      <li class="nav-item" *ngFor="let item of navItems" [class.active]="isActive(item)">
+        <a class="nav-link">{{ item.name }} <span class="nav-indicator"></span></a>
+      </li>
+    </ul>
+
+    <fa-icon class="user-avatar" [icon]="icons.faUserAlt"></fa-icon>
+
+  </div>
+
+</nav>
+<main role="main" class="container">
+
+  <h1 class="header">Last added employees</h1>
+  <div class="list-group" *ngIf="recentlyAddEmployees$ | async as employeesAdded">
+    <a class="list-group-item list-group-item-action disabled">
+      <div class="row">
+        <div class="col-3">name</div>
+        <div class="col-3">contact</div>
+        <div class="col-2">company</div>
+        <div class="col-2">status</div>
+        <div class="col-2">last updated</div>
+      </div>
+    </a>
+    <a routerLink="/employees/{{employee.id}}"
+       class="list-group-item list-group-item-action"
+       *ngFor="let employee of employeesAdded">
+      <div class="row">
+        <div class="col-3">{{employee.firstName}} {{employee.lastName}}</div>
+        <div class="col-3">{{employee.phoneNumber}}<br>{{employee.email}}</div>
+        <div class="col-2">{{employee.company}}</div>
+        <div class="col-2">{{employee.status}}</div>
+        <div class="col-2">&nbsp;</div>
+      </div>
+    </a>
+    <a class="list-group-item list-group-item-action disabled" *ngFor="let item of [].constructor(numberLastOperation-employeesAdded.length)">
+      <div class="row">
+        <div class="col-3">&nbsp;</div>
+        <div class="col-3">&nbsp;<br>&nbsp;</div>
+        <div class="col-2">&nbsp;</div>
+        <div class="col-2">&nbsp;</div>
+        <div class="col-2">&nbsp;</div>
+      </div>
+    </a>
+  </div>
+
+  <h1 class="header">Last edited employees</h1>
+  <div class="list-group" *ngIf="recentlyEditedEmployees$ | async as employeesEdited">
+    <a class="list-group-item list-group-item-action disabled">
+      <div class="row">
+        <div class="col-3">name</div>
+        <div class="col-3">contact</div>
+        <div class="col-2">company</div>
+        <div class="col-2">status</div>
+        <div class="col-2">last updated</div>
+      </div>
+    </a>
+    <a routerLink="/employees/{{employee.id}}"
+       class="list-group-item list-group-item-action"
+       *ngFor="let employee of employeesEdited">
+      <div class="row">
+        <div class="col-3">{{employee.firstName}} {{employee.lastName}}</div>
+        <div class="col-3">{{employee.phoneNumber}}<br>{{employee.email}}</div>
+        <div class="col-2">{{employee.company}}</div>
+        <div class="col-2">{{employee.status}}</div>
+        <div class="col-2">&nbsp;</div>
+      </div>
+    </a>
+    <a class="list-group-item list-group-item-action disabled" *ngFor="let item of [].constructor(numberLastOperation-employeesEdited.length)">
+      <div class="row">
+        <div class="col-3">&nbsp;</div>
+        <div class="col-3">&nbsp;<br>&nbsp;</div>
+        <div class="col-2">&nbsp;</div>
+        <div class="col-2">&nbsp;</div>
+        <div class="col-2">&nbsp;</div>
+      </div>
+    </a>
+  </div>
+
+
+
+
+
+
+
+
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <a routerLink="/employees" (click)="goToEmployees()" >Employees</a>
+    </div>
+    <div class="row">
+      <span class="text-muted">Place sticky footer content here.</span>
+    </div>
+  </div>
+</footer>

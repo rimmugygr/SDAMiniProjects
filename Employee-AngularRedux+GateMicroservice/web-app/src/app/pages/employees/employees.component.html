@@ -1,0 +1,95 @@
+<div class="container mt-5" *ngIf="displayEmployees$ | async as display">
+
+  <div class="row">
+    <div class="col-9">
+      <!-- breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Employee</li>
+        </ol>
+      </nav>
+    </div>
+    <div class="col-3 w-100">
+      <button type="button" class="btn btn-outline-secondary btn-lg w-100" routerLink="/employees/create">
+        Add Employee
+      </button>
+    </div>
+  </div>
+
+  <!-- search -->
+  <div class="list-group">
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <input placeholder="Search by name ..." type="text" [value]="display.displaySearchText" class="form-control" (keyup)="onInputSearchText(selectSearch.value)" #selectSearch>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <select class="form-control" (change)="onSelectEmployeeStatus(selectStatus.value)" #selectStatus>
+          <option value="" [selected]="display.displayStatus === null">All status</option>
+          <option *ngFor="let employeeStatus of employeesStatusEnum | keyvalue" [value]="employeeStatus.key" [selected]="display.displayStatus === employeeStatus.key" >
+            {{  employeeStatus.key.toLowerCase().split('_').join('\n') }} status
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md-6">
+        <select class="form-control" (change)="onSelectEmployeeCompany(selectCompany.value)" #selectCompany>
+          <option value=""  [selected]="display.displayCompany === null">All company</option>
+          <option *ngFor="let company of companies$ | async" [value]="company" [selected]="display.displayCompany === company" >
+            {{ company }} company
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <!-- list of employees -->
+  <div class="list-group" *ngIf="displayEmployees$">
+    <a class="list-group-item list-group-item-action disabled">
+      <div class="row">
+        <div class="col-3">name</div>
+        <div class="col-3">contact</div>
+        <div class="col-2">company</div>
+        <div class="col-2">status</div>
+        <div class="col-2">last updated</div>
+      </div>
+    </a>
+    <a routerLink="/employees/{{employee.id}}"
+       class="list-group-item list-group-item-action"
+       *ngFor="let employee of display.displayEmployees">
+      <div class="row">
+        <div class="col-3">{{employee.firstName}} {{employee.lastName}}</div>
+        <div class="col-3">{{employee.phoneNumber}}<br>{{employee.email}}</div>
+        <div class="col-2">{{employee.company}}</div>
+        <div class="col-2">{{employee.status}}</div>
+        <div class="col-2">&nbsp;</div>
+      </div>
+    </a>
+    <a class="list-group-item list-group-item-action disabled" *ngFor="let item of [].constructor(display.displayPageSize-display.displayEmployees.length)">
+      <div class="row">
+        <div class="col-3">&nbsp;</div>
+        <div class="col-3">&nbsp;<br>&nbsp;</div>
+        <div class="col-2">&nbsp;</div>
+        <div class="col-2">&nbsp;</div>
+        <div class="col-2">&nbsp;</div>
+      </div>
+    </a>
+  </div>
+
+  <!--  pagination-->
+  <nav aria-label="Page navigation" >
+    <ul class="pagination justify-content-center" *ngIf="display.displayPageMax > 0">
+      <li class="page-item" [ngClass]="{'disabled': display.displayPageActual === 1}">
+        <a class="page-link" (click)="onSelectPage(display.displayPageActual - 1)">Previous</a>
+      </li>
+      <li class="page-item" (click)="onSelectPage(i+1)" *ngFor="let item of [].constructor(display.displayPageMax); let i = index"
+          [ngClass]="{'disabled': display.displayPageActual === (i+1)}">
+        <a class="page-link" >{{i+1}}</a>
+      </li>
+      <li class="page-item"  [ngClass]="{'disabled': display.displayPageActual === display.displayPageMax}">
+        <a class="page-link" (click)="onSelectPage(display.displayPageActual + 1)">Next</a>
+      </li>
+    </ul>
+  </nav>
+
+</div>

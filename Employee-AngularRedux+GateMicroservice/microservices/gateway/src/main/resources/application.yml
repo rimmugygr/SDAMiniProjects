@@ -1,0 +1,40 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    com.sda: debug
+
+zuul:
+  igoredServices: '*'
+  sensitiveHeaders: Cookie,Set-Cookie,Authorization
+  routes:
+    employees-service:
+      path: /api/v1/employees-service/**
+      stripPrefix: true
+    #    auth:
+    #      path: /auth/**
+    #      url: http://localhost:8980/auth
+    #      stripPrefix: true
+    api-v1:
+      path: /api/v1/**
+      stripPrefix: false
+    api:
+      path: /api/**
+      stripPrefix: false
+    web:
+      path: /**
+      stripPrefix: false
+
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+  eureka:
+    enabled: false
+
+employees-service:
+  ribbon:
+    listOfServers: localhost:8091
+web:
+  ribbon:
+    listOfServers: localhost:4200

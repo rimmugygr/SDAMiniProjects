@@ -1,0 +1,45 @@
+GET http://localhost:8091/employees
+Accept: application/json
+###
+POST http://localhost:8091/employees
+Content-Type: application/json
+
+{
+  "firstName": "zzz",
+  "lastName": "zzz",
+  "phoneNumber": "zzz",
+  "dateOfBirth": "2000-12-12",
+  "email": "zzz@zzz.pl",
+  "status": "SUSPENDED",
+  "company": "zzz",
+  "address": {
+    "street": "zzz",
+    "buildingNumber": "zzz",
+    "flatNumber": "zzz",
+    "city": "zzz",
+    "postalCode": "zzz",
+    "country": "zzz"
+  }
+}
+###
+POST http://localhost:8091/employees
+Content-Type: application/json
+
+{
+  "firstName": "yyy",
+  "lastName": "xxx",
+  "phoneNumber": "yyy",
+  "dateOfBirth": "2010-01-02",
+  "email": "xxx@yyy.pl",
+  "status": "ON_SICK_LEAVE",
+  "company": "yyy",
+  "address": {
+    "street": "xxx",
+    "buildingNumber": "yyy",
+    "flatNumber": "xxx",
+    "city": "yyy",
+    "postalCode": "xxx",
+    "country": "yyy"
+  }
+}
+###
