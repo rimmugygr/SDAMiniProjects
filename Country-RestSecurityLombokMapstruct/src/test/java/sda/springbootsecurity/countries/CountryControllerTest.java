@@ -21,23 +21,31 @@ class CountryControllerTest {
     ObjectMapper mapper;
 
     @MockBean
+    CountryMapper countryMapper;
+
+    @MockBean
     CountryService mockService;
 
-//    @MockBean
-//    CountryService mockService;
     @Test
     void shouldEditCountryWhenChangeProvided() throws Exception {
         //given
         var countryId = "3";
-
-        var editCountry = Country.builder()
+        CountryDto editCountryDto = CountryDto.builder()
                 .name("USA")
                 .capital("NY")
                 .currency("USD")
                 .language("English")
                 .population(1000).build();
 
-        String editRequestCountryJson = mapper.writeValueAsString(editCountry);
+        Country editCountry = Country.builder()
+                .name("USA")
+                .capital("NY")
+                .currency("USD")
+                .language("English")
+                .population(1000).build();
+
+        String editRequestCountryJson = mapper.writeValueAsString(editCountryDto);
+        Mockito.when(countryMapper.map(editCountryDto)).thenReturn(editCountry);
 
         //when
         ResultActions result = mvc.perform(
