@@ -1,11 +1,11 @@
 import {State, Action, Selector, StateContext} from '@ngxs/store';
 import {
-  AddEmployee,
-  FetchDisplayCompany,
-  FetchDisplayEmployees,
-  FetchDisplayPageActual,
-  FetchDisplaySearchText,
-  FetchDisplayStatus, FetchEditEmployee,
+  CreateEmployee,
+  DisplayCompany,
+  DisplayEmployees,
+  DisplayPageActual,
+  DisplaySearchText,
+  DisplayStatus, UpdateEmployee,
   FetchEmployees
 } from './employees.actions';
 import {Employee} from '../../model/employee.model';
@@ -16,13 +16,13 @@ import {tap} from 'rxjs/operators';
 export interface EmployeesStateModel {
   employees: Employee[];
   companies: string[];
-  display: DisplayEmployees;
+  display: DisplayEmployee;
   recentlyAddedEmployees: Employee[];
   recentlyDeletedEmployees: Employee[];
   recentlyEditedEmployees: Employee[];
 }
 
-export interface DisplayEmployees {
+export interface DisplayEmployee {
   displayEmployees: Employee[];
   displayStatus: string;
   displayCompany: string;
@@ -55,7 +55,7 @@ export interface DisplayEmployees {
 @Injectable()
 export class EmployeesState{
   @Selector()
-  public static getDisplayEmployees(state: EmployeesStateModel): DisplayEmployees {
+  public static getDisplayEmployees(state: EmployeesStateModel): DisplayEmployee {
     return state.display;
   }
 
@@ -100,64 +100,64 @@ export class EmployeesState{
       tap(data => {
         ctx.patchState({employees: data.content}); // ctx.setState(patch({employees: [] as EmployeeModel[]}));
         ctx.patchState({companies: this.employeesService.getAllCompanies(data.content)});
-        ctx.dispatch(new FetchDisplayEmployees());
+        ctx.dispatch(new DisplayEmployees());
       }),
     );
   }
 
-  @Action(AddEmployee)
-  public fetchAddEmployee(ctx: StateContext<EmployeesStateModel>, action: AddEmployee): any {
+  @Action(CreateEmployee)
+  public fetchAddEmployee(ctx: StateContext<EmployeesStateModel>, action: CreateEmployee): any {
     return this.employeesService.postEmployee(action.payload.employee).pipe(
       tap(data => {
         const employees = [... ctx.getState().employees, data];
         ctx.patchState({recentlyAddedEmployees: [data, ...ctx.getState().recentlyAddedEmployees]});
         ctx.patchState({employees});
         ctx.patchState({companies: this.employeesService.getAllCompanies(employees)});
-        ctx.dispatch(new FetchDisplayEmployees());
+        ctx.dispatch(new DisplayEmployees());
       }),
     );
   }
 
   // todo check if last modified is on the same id
-  @Action(FetchEditEmployee)
-  public fetchEditEmployee(ctx: StateContext<EmployeesStateModel>, action: FetchEditEmployee): any {
+  @Action(UpdateEmployee)
+  public fetchEditEmployee(ctx: StateContext<EmployeesStateModel>, action: UpdateEmployee): any {
     return this.employeesService.putEmployee(action.payload.employee).pipe(
       tap((data: Employee) => {
         const employees = [... ctx.getState().employees].map(x =>  x.id === data.id ? data : x);
         ctx.patchState({recentlyEditedEmployees: [data, ...ctx.getState().recentlyEditedEmployees]});
         ctx.patchState({employees});
         ctx.patchState({companies: this.employeesService.getAllCompanies(employees)});
-        ctx.dispatch(new FetchDisplayEmployees());
+        ctx.dispatch(new DisplayEmployees());
       }),
     );
   }
 
-  @Action(FetchDisplayStatus)
-  public fetchDisplayEmployeeStatus(ctx: StateContext<EmployeesStateModel>, action: FetchDisplayStatus): void {
+  @Action(DisplayStatus)
+  public fetchDisplayEmployeeStatus(ctx: StateContext<EmployeesStateModel>, action: DisplayStatus): void {
     ctx.patchState( {display: { ... ctx.getState().display, displayStatus: action.payload.status} });
-    ctx.dispatch(new FetchDisplayPageActual({pageActual: 1}));
+    ctx.dispatch(new DisplayPageActual({pageActual: 1}));
   }
 
-  @Action(FetchDisplayCompany)
-  public fetchDisplayEmployeeCompany(ctx: StateContext<EmployeesStateModel>, action: FetchDisplayCompany): void {
+  @Action(DisplayCompany)
+  public fetchDisplayEmployeeCompany(ctx: StateContext<EmployeesStateModel>, action: DisplayCompany): void {
     ctx.patchState( {display: { ... ctx.getState().display, displayCompany: action.payload.company} });
-    ctx.dispatch(new FetchDisplayPageActual({pageActual: 1}));
+    ctx.dispatch(new DisplayPageActual({pageActual: 1}));
   }
 
-  @Action(FetchDisplaySearchText)
-  public fetchDisplaySearchText(ctx: StateContext<EmployeesStateModel>, action: FetchDisplaySearchText): void {
+  @Action(DisplaySearchText)
+  public fetchDisplaySearchText(ctx: StateContext<EmployeesStateModel>, action: DisplaySearchText): void {
     ctx.patchState( {display: { ... ctx.getState().display, displaySearchText: action.payload.searchText} });
-    ctx.dispatch(new FetchDisplayPageActual({pageActual: 1}));
+    ctx.dispatch(new DisplayPageActual({pageActual: 1}));
   }
 
-  @Action(FetchDisplayPageActual)
-  public fetchDisplayPageActual(ctx: StateContext<EmployeesStateModel>, action: FetchDisplayPageActual): void {
+  @Action(DisplayPageActual)
+  public fetchDisplayPageActual(ctx: StateContext<EmployeesStateModel>, action: DisplayPageActual): void {
     ctx.patchState( {display: { ... ctx.getState().display, displayPageActual: action.payload.pageActual} });
-    ctx.dispatch(new FetchDisplayEmployees());
+    ctx.dispatch(new DisplayEmployees());
   }
 
-  @Action(FetchDisplayEmployees)
-  public fetchDisplayEmployees(ctx: StateContext<EmployeesStateModel>): void {
+  @Action(DisplayEmployees)
+  public displayEmployees(ctx: StateContext<EmployeesStateModel>): void {
     const display = this.employeesService.getDisplayEmployees(ctx.getState().display, ctx.getState().employees);
     ctx.patchState( {display: { ... ctx.getState().display, displayEmployees: display.employees} });
     ctx.patchState( {display: { ... ctx.getState().display, displayPageMax: display.pageMax} });

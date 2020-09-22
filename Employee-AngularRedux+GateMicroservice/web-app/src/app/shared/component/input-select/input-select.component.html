@@ -1,0 +1,8 @@
+<div [formGroup]="form">
+  <label [for]="id">Status</label>
+  <select class="form-control" [formControlName]="id" [id]="id">
+    <option *ngFor="let option of mapOptions | keyvalue" [value]="option.key">
+      {{ option.value }} </option>
+  </select>
+  <small *ngIf="ifRequired(id)" [id]="'validator-' + id" class="text-danger">This field is required</small>
+</div>

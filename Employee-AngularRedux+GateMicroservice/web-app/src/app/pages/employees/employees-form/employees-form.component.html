@@ -1,16 +1,15 @@
 <div class="container mt-5">
 
   <div class="row">
-    <div class="col-9">
-      <!-- breadcrumb -->
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
-          <li class="breadcrumb-item"><a routerLink="/employees" routerLinkActive="active">Employees</a></li>
-          <li class="breadcrumb-item active" aria-current="page">{{pageModel.pageMode.toLowerCase()}}</li>
-        </ol>
-      </nav>
-    </div>
+    <!-- breadcrumb -->
+    <nav aria-label="breadcrumb col-9">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+        <li class="breadcrumb-item"><a routerLink="/employees" routerLinkActive="active">Employees</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{pageModel.pageMode.toLowerCase()}}</li>
+      </ol>
+    </nav>
+
     <div class="col-3" *ngIf="isDetailsMode()">
       <button type="button"
               class="btn btn-lg btn-outline-secondary mr-3"
@@ -21,94 +20,61 @@
     </div>
   </div>
 
-  <div class="alert alert-success alert-dismissible fade show " role="alert">
-    <div style="text-align: center;"><strong>Success</strong> Employee saved</div>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-
-  <div *ngIf="isError" class="alert alert-danger alert-dismissible fade show" role="alert">
-    <div style="text-align: center;"><strong>Error</strong> Employee not saved</div>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-
   <form [formGroup]="employeeForm" (ngSubmit)="onFormSubmit()" novalidate>
     <div class="header">Contact information</div>
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="firstNameId">First name</label>
-        <input formControlName="firstName" type="text" class="form-control" id="firstNameId">
-        <span *ngIf="ifRequired('firstName')">
-                Please confirm your email address.
-        </span>
+        <app-input-text placeholder="" [form]="employeeForm" id="firstName" label="First name" [showErrors]="showError"></app-input-text>
       </div>
       <div class="form-group col-md-6">
-        <label for="lastNameId">Last name</label>
-        <input formControlName="lastName" type="text" class="form-control" id="lastNameId">
+        <app-input-text placeholder="" [form]="employeeForm" id="lastName" label="Last name" [showErrors]="showError"></app-input-text>
       </div>
     </div>
     <div class="form-row">
       <div class="form-group col-md-8">
-        <label for="companyId">Company</label>
-        <input formControlName="company" type="text" class="form-control" id="companyId">
+        <app-input-text placeholder="" [form]="employeeForm" id="company" label="Company" [showErrors]="showError"></app-input-text>
       </div>
       <div class="form-group col-md-4">
-        <label for="statusId">Status</label>
-        <select class="form-control" formControlName="status" id="statusId">
-          <option *ngFor="let employeeStatus of employeesStatusEnum | keyvalue" [value]="employeeStatus.key">
-            {{ employeeStatus.key.slice(0,1).toUpperCase() + employeeStatus.key.slice(1).toLowerCase().split('_').join('\n') }}
-          </option>
-        </select>
+        <app-input-select id="status" [form]="employeeForm" label="Status" [showErrors]="showError" [mapOptions]="statusMap"></app-input-select>
       </div>
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="emailId">Email</label>
-        <input formControlName="email" type="email" class="form-control" id="emailId">
+        <app-input-text placeholder="" [form]="employeeForm" id="email" label="Email" [showErrors]="showError"></app-input-text>
       </div>
       <div class="form-group col-md-4">
-        <label for="phoneId">Phone</label>
-        <input formControlName="phoneNumber" type="text" class="form-control" id="phoneId">
+        <app-input-text placeholder="" [form]="employeeForm" id="phoneNumber" label="Phone" [showErrors]="showError"></app-input-text>
       </div>
       <div class="form-group col-md-2">
-        <label for="dateOfBirthId">Birth Date</label>
-        <input formControlName="dateOfBirth" type="text" class="form-control" id="dateOfBirthId" placeholder="YYYY-MM-DD" mask="0000-00-00" [dropSpecialCharacters]="false">
+        <app-input-text placeholder="YYYY-MM-DD" [form]="employeeForm" id="dateOfBirth" label="Birth Date" [showErrors]="showError" mask="0000-00-00"></app-input-text>
       </div>
     </div>
+
     <div class="header">Address</div>
-    <div formGroupName="address">
+
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="streetId">Street</label>
-          <input formControlName="street" type="text" class="form-control" id="streetId">
+          <app-input-text placeholder="" [form]="employeeForm" id="street" label="Street" [showErrors]="showError"></app-input-text>
         </div>
         <div class="form-group col-md-4">
-          <label for="buildingNumberId">Building number</label>
-          <input formControlName="buildingNumber" type="text" class="form-control" id="buildingNumberId">
+          <app-input-text placeholder="" [form]="employeeForm"  id="buildingNumber" label="Building number" [showErrors]="showError"></app-input-text>
         </div>
         <div class="form-group col-md-2">
-          <label for="flatNumberId">Flat number</label>
-          <input formControlName="flatNumber" type="text" class="form-control" id="flatNumberId">
+          <app-input-text placeholder="" [form]="employeeForm"  id="flatNumber" label="Flat number" [showErrors]="showError"></app-input-text>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="cityId">City</label>
-          <input formControlName="city" type="text" class="form-control" id="cityId">
+          <app-input-text placeholder="" [form]="employeeForm" id="city" label="City" [showErrors]="showError"></app-input-text>
         </div>
         <div class="form-group col-md-4">
-          <label for="postalCodeId">Postal code</label>
-          <input formControlName="postalCode" type="text" class="form-control" id="postalCodeId" mask="00-000" placeholder="00-000" [dropSpecialCharacters]="false">
+          <app-input-text placeholder="__-___" [form]="employeeForm" id="postalCode" label="Postal code" [showErrors]="showError" mask="00-000"></app-input-text>
         </div>
         <div class="form-group col-md-2">
-          <label for="countryId">Country</label>
-          <input formControlName="country" type="text" class="form-control" id="countryId">
+          <app-input-text placeholder="" [form]="employeeForm"  id="country" label="Country" [showErrors]="showError"></app-input-text>
         </div>
       </div>
-    </div>
+
     <!-- buttons   -->
     <div class="row">
       <div class="col-9">
@@ -122,7 +88,9 @@
   </form>
 
 </div>
+
 <p>{{employeeForm.get('firstName').errors | json}}</p>
 <p> {{ employeeForm.value | json}}</p>
 <p>MODE IS: {{ pageModel | json }}</p>
 <p> {{employee$| async| json}}</p>
+<p *ngFor="let a of statusMap | keyvalue"> {{a.key + "-" + a.value}}</p>

@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {Employee, EmployeeStatus} from '../../shared/model/employee.model';
 import {Observable, Subject} from 'rxjs';
 import {Actions, Select, Store} from '@ngxs/store';
-import {DisplayEmployees, EmployeesState} from '../../shared/state/employees/employees.state';
+import {DisplayEmployee, EmployeesState} from '../../shared/state/employees/employees.state';
 import {
-  FetchDisplayCompany,
-  FetchDisplayPageActual,
-  FetchDisplaySearchText,
-  FetchDisplayStatus,
+  DisplayCompany,
+  DisplayPageActual,
+  DisplaySearchText,
+  DisplayStatus,
   FetchEmployees
 } from '../../shared/state/employees/employees.actions';
 import {debounceTime} from 'rxjs/operators';
@@ -35,7 +35,7 @@ export class EmployeesComponent implements OnInit {
   companies$: Observable<string[]>;
 
   @Select(EmployeesState.getDisplayEmployees)
-  displayEmployees$: Observable<DisplayEmployees>;
+  displayEmployees$: Observable<DisplayEmployee>;
 
   constructor(private store: Store) { }
 
@@ -48,19 +48,19 @@ export class EmployeesComponent implements OnInit {
   }
 
   onSelectEmployeeStatus(status: string): void {
-    this.store.dispatch( new FetchDisplayStatus({status}));
+    this.store.dispatch( new DisplayStatus({status}));
   }
 
   onSelectEmployeeCompany(selectCompany: string): void {
-    this.store.dispatch( new FetchDisplayCompany({company: selectCompany}));
+    this.store.dispatch( new DisplayCompany({company: selectCompany}));
   }
 
   onSelectPage(selectPage: number): void {
-    this.store.dispatch(new FetchDisplayPageActual({pageActual: selectPage}));
+    this.store.dispatch(new DisplayPageActual({pageActual: selectPage}));
   }
 
   onSelectSearchText(searchText: string): void {
-    this.store.dispatch(new FetchDisplaySearchText({searchText}));
+    this.store.dispatch(new DisplaySearchText({searchText}));
   }
 
   onInputSearchText(text: string): void {

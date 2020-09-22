@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {PAGE_MODE, PageForm} from '../../../shared/model/pageForm.model';
+import {PAGE_MODE, PageForm} from '../../../shared/model/model';
 import {getPageModel} from '../../../shared/util/getPageModel';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Actions, ofActionSuccessful, Select, Store} from '@ngxs/store';
 import {EmployeesState} from '../../../shared/state/employees/employees.state';
 import {Employee, EmployeeStatus} from '../../../shared/model/employee.model';
-import {AddEmployee, FetchEditEmployee} from '../../../shared/state/employees/employees.actions';
+import {CreateEmployee, UpdateEmployee} from '../../../shared/state/employees/employees.actions';
 import {Observable} from 'rxjs';
-import {map, shareReplay, tap} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-employees-form',
@@ -19,9 +19,9 @@ export class EmployeesFormComponent implements OnInit {
   pageModel: PageForm;
   employeeForm: FormGroup;
   currentEmployee: Employee;
-  employeesStatusEnum = EmployeeStatus;
-  isError = false;
+  showError = false;
   isSuccessAction = true;
+  statusMap: Record<string, string> = {...EmployeeStatus};
 
   employee$: Observable<Employee>;
 
@@ -30,6 +30,7 @@ export class EmployeesFormComponent implements OnInit {
 
   @Select(EmployeesState.getRecentlyEditedEmployees)
   editedEmployees$: Observable<Employee[]>;
+
 
 
 
@@ -42,9 +43,11 @@ export class EmployeesFormComponent implements OnInit {
   ngOnInit(): void {
     this.pageModel = getPageModel(this.activatedRoute);
     this.initForm();
-    this.action.pipe(ofActionSuccessful(AddEmployee)).subscribe(
+    this.initStatus();
+    this.action.pipe(ofActionSuccessful(CreateEmployee)).subscribe(
       result => this.isSuccessAction = true
     );
+
   }
 
   private initForm(): void {
@@ -57,19 +60,26 @@ export class EmployeesFormComponent implements OnInit {
       email: [null, Validators.required],
       status: [null, Validators.required],
       company: [null, Validators.required],
-      address: this.fb.group({
-        street: [null, Validators.required],
-        buildingNumber: [null],
-        flatNumber: [null],
-        city: [null, Validators.required],
-        postalCode: [null, Validators.required],
-        country: [null, Validators.required],
-      })
+      street: [null, Validators.required],
+      buildingNumber: [null],
+      flatNumber: [null],
+      city: [null, Validators.required],
+      postalCode: [null, Validators.required],
+      country: [null, Validators.required],
     });
 
     if (this.isEditMode() || this.isDetailsMode()) {
       this.currentEmployee = this.store.selectSnapshot(EmployeesState.getEmployeeById)(this.pageModel.id);
-      this.employeeForm.patchValue(this.currentEmployee);
+      this.employeeForm.patchValue(
+        {
+          ...this.currentEmployee,
+          street: this.currentEmployee.address.street,
+          buildingNumber: this.currentEmployee.address.buildingNumber,
+          flatNumber: this.currentEmployee.address.flatNumber,
+          city: this.currentEmployee.address.city,
+          postalCode: this.currentEmployee.address.postalCode,
+          country: this.currentEmployee.address.country
+        });
     }
 
     if (this.isDetailsMode()) {
@@ -108,25 +118,39 @@ export class EmployeesFormComponent implements OnInit {
       return '/employees';
     }
   }
-
   onFormSubmit(): void {
-    const employee  = { ... this.employeeForm.value };
+    this.showError = true;
+    const employee: Employee  = { ... this.employeeForm.value,
+      address: {
+      street: this.employeeForm.value.street,
+      buildingNumber:  this.employeeForm.value.buildingNumber,
+      flatNumber:  this.employeeForm.value.flatNumber,
+      city:  this.employeeForm.value.city,
+      postalCode:  this.employeeForm.value.postalCode,
+      country:  this.employeeForm.value.country,
+    }};
     if (this.isCreateMode()) {
-      // todo by selector not by action subscribe
-      this.store.dispatch(new AddEmployee({employee}))
-        .subscribe(() => this.addedEmployees$.subscribe(
-            tab => this.router.navigateByUrl(`/employees/${tab[0].id}`)),
-          error => this.isError = true,
-          () => this.isError = false
-        );
+      this.store.dispatch(new CreateEmployee({employee}));
     }
     if (this.isEditMode()) {
-      this.store.dispatch(new FetchEditEmployee({employee}));
-      this.router.navigateByUrl(`/employees/${employee.id}`);
+      this.store.dispatch(new UpdateEmployee({employee}));
     }
   }
 
   ifRequired(value: string): boolean {
     return this.employeeForm.get(value).errors?.required && (this.employeeForm.get(value).touched || this.employeeForm.get(value).dirty );
   }
+
+  private initStatus(): void {
+    this.statusMap = {...EmployeeStatus};
+    for (const key of Object.keys(EmployeeStatus)) {
+      this.statusMap[key] = this.toNormalText(this.statusMap[key]);
+    }
+  }
+
+  private toNormalText(text: string): string {
+    return text.slice(0, 1).toUpperCase() + text.slice(1).toLowerCase().split('_').join('\n');
+  }
+
+
 }

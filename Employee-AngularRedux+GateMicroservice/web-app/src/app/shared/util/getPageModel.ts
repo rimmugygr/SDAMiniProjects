@@ -1,4 +1,4 @@
-import {PAGE_MODE, PageForm} from '../model/pageForm.model';
+import {PAGE_MODE, PageForm} from '../model/model';
 import {ActivatedRoute} from '@angular/router';
 
 export const getPageModel = (activatedRoute: ActivatedRoute): PageForm => {

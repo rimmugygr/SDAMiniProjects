@@ -8,3 +8,9 @@ export interface PageForm {
   pageMode: PAGE_MODE;
   id?: string;
 }
+
+export interface IAlert {
+  show: boolean;
+  text?: string;
+  length?: number;
+}

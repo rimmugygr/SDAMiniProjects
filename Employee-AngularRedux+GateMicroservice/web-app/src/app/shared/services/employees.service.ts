@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {Employee} from '../model/employee.model';
 import {environment} from '../../../environments/environment';
 import {Pageable} from '../model/pageable.model';
-import {DisplayEmployees} from '../state/employees/employees.state';
+import {DisplayEmployee} from '../state/employees/employees.state';
 
 const  headers = new HttpHeaders({ 'Content-Type': 'application/json', key: 'Origin', 'Access-Control-Allow-Origin': 'http://localhost:4200' });
 
@@ -31,7 +31,7 @@ export class EmployeesService {
     return this.http.put<Employee>(`${this.baseEmployeesUrl}/${employee.id}`, employee, {headers});
   }
 
-  getDisplayEmployees(display: DisplayEmployees, employees: Employee []): {employees: Employee[], pageMax: number} {
+  getDisplayEmployees(display: DisplayEmployee, employees: Employee []): {employees: Employee[], pageMax: number} {
      const employeesFiltered = this.getEmployeesFiltered(employees, display.displayStatus, display.displaySearchText, display.displayCompany);
      const displayPageMax = this.getDisplayPageMax(display.displayPageSize, employeesFiltered);
      const employeesPageableAndFiltered = this.getEmployeesPageable(employeesFiltered, display.displayPageActual, display.displayPageSize);

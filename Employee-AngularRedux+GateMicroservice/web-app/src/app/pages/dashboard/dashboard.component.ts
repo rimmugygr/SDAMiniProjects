@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import {Select} from '@ngxs/store';
-import {DisplayEmployees, EmployeesState} from '../../shared/state/employees/employees.state';
+import {DisplayEmployee, EmployeesState} from '../../shared/state/employees/employees.state';
 import {Observable} from 'rxjs';
 import {Employee} from '../../shared/model/employee.model';
 import {map} from 'rxjs/operators';
@@ -32,11 +32,11 @@ export class DashboardComponent implements OnInit {
 
   @Select(EmployeesState.getRecentlyAddedEmployees)
   addEmployees$: Observable<Employee[]>;
-  recentlyAddEmployees$: Observable<Employee[]> = this.addEmployees$.pipe(map(x => x.slice(0, this.numberLastOperation)));
+  recentlyAddEmployees$: Observable<Employee[]> = this.addEmployees$.pipe(map(x => x?.slice(0, this.numberLastOperation)));
 
   @Select(EmployeesState.getRecentlyEditedEmployees)
   editEmployees$: Observable<Employee[]>;
-  recentlyEditedEmployees$: Observable<Employee[]> = this.editEmployees$.pipe(map(x => x.slice(0, this.numberLastOperation)));
+  recentlyEditedEmployees$: Observable<Employee[]> = this.editEmployees$.pipe(map(x => x?.slice(0, this.numberLastOperation)));
 
   constructor() { }
 

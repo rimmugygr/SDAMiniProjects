@@ -4,42 +4,42 @@ export class FetchEmployees {
   public static readonly type = '[Employees] Fetch all employees and companies';
 }
 
-export class FetchDisplayEmployees {
-  public static readonly type = '[Employees] Fetch display employee';
+export class DisplayEmployees {
+  public static readonly type = '[Employees] Display employee';
 }
 
-export class FetchDisplayStatus {
-  public static readonly type = '[Employees] Fetch display status';
+export class DisplayStatus {
+  public static readonly type = '[Employees] Display status';
   constructor(public payload: {status: string}) { }
 }
 
-export class FetchDisplayCompany {
-  public static readonly type = '[Employees] Fetch display company';
+export class DisplayCompany {
+  public static readonly type = '[Employees] Display company';
   constructor(public payload: {company: string}) { }
 }
 
-export class FetchDisplaySearchText {
-  public static readonly type = '[Employees] Fetch display search text';
+export class DisplaySearchText {
+  public static readonly type = '[Employees] Display search text';
   constructor(public payload: {searchText: string}) { }
 }
 
-export class FetchDisplayPageActual {
-  public static readonly type = '[Employees] Fetch display actual page';
+export class DisplayPageActual {
+  public static readonly type = '[Employees] Display actual page';
   constructor(public payload: {pageActual: number}) { }
 }
 
-export class AddEmployee {
-  public static readonly type = '[Employees] Fetch add employee';
+export class CreateEmployee {
+  public static readonly type = '[Employees] Create employee';
   constructor(public payload: {employee: Employee}) { }
 }
 
-export class FetchEditEmployee {
-  public static readonly type = '[Employees] Fetch edit employee';
+export class UpdateEmployee {
+  public static readonly type = '[Employees] Update employee';
   constructor(public payload: {employee: Employee}) { }
 }
 
-export class FetchDeleteEmployee {
-  public static readonly type = '[Employees] Fetch delete employee';
+export class DeleteEmployee {
+  public static readonly type = '[Employees] Delete employee';
   constructor(public payload: {id: string}) { }
 }
 
