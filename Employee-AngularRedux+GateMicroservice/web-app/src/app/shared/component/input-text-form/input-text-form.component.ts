@@ -13,7 +13,7 @@ export class InputTextComponent implements OnInit {
   @Input() placeholder = '';
   @Input() form: FormGroup;
   @Input() showErrors: boolean;
-  @Input() mask?: string;
+  @Input() mask: string;
 
   constructor() { }
 
@@ -21,7 +21,8 @@ export class InputTextComponent implements OnInit {
   }
 
   ifRequired(value: string): boolean {
-    const field = this.form.get(value);
-    return this.showErrors ? field.errors?.required : field?.touched && field.errors?.required;
+    // const field = this.form.get(value);
+    // return this.showErrors ? field.errors?.required : field.touched && field.errors?.required;
+    return false;
   }
 }

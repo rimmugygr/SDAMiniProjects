@@ -1,11 +1,12 @@
 <div [formGroup]="form" >
   <label  [for]="id">{{ label }}  </label>
+  <!--  no mask -->
   <input class="form-control" [class.is-invalid]="ifRequired(id)" [formControlName]="id" type="text"
          [id]="id" [placeholder]="placeholder" [mask]="mask" [dropSpecialCharacters]="!mask" *ngIf="!mask">
+  <!--  with mask-->
   <input class="form-control" [class.is-invalid]="ifRequired(id)" [formControlName]="id" type="text"
          [id]="id" [placeholder]="placeholder" [mask]="mask" [dropSpecialCharacters]="false" *ngIf="mask">
   <small *ngIf="ifRequired(id)" [id]="'validator-' + id" class="text-danger">This field is required</small>
 </div>
-
 
 
