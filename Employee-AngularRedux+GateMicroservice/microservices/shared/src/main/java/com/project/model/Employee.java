@@ -24,5 +24,5 @@ public class Employee {
     //private String addressId;
     private Address address;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime modifiedDate;
+    private LocalDateTime lastModifiedDate;
 }

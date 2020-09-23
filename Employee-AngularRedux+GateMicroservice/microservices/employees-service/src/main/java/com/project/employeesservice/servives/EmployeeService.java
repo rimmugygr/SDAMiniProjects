@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @RequiredArgsConstructor
 @Service
@@ -42,7 +41,7 @@ public class EmployeeService {
         if(employee.getAddress() == null) {
             employee.setAddress(new Address());
         }
-        employee.setModifiedDate(LocalDateTime.now());
+        employee.setLastModifiedDate(LocalDateTime.now());
         return employeeRepository.save(employee);
     }
 
@@ -51,7 +50,7 @@ public class EmployeeService {
             throw new InvalidData("Employee id not match");
         }
         if(employeeRepository.existsById(id)) {
-            employee.setModifiedDate(LocalDateTime.now());
+            employee.setLastModifiedDate(LocalDateTime.now());
             return employeeRepository.save(employee);
         } else throw new ResourcesNotFoundException(String.format("Employee on id %s not found", id));
     }
@@ -59,7 +58,7 @@ public class EmployeeService {
     public Employee deleteEmployee(String id) {
         Employee employee = getEmployeeById(id);
         employeeRepository.deleteById(id);
-        employee.setModifiedDate(LocalDateTime.now());
+        employee.setLastModifiedDate(LocalDateTime.now());
         return employee;
     }
 }
