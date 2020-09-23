@@ -4,19 +4,22 @@
     <!-- breadcrumb -->
     <nav aria-label="breadcrumb col-9">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
-        <li class="breadcrumb-item"><a routerLink="/employees" routerLinkActive="active">Employees</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{pageModel.pageMode.toLowerCase()}}</li>
+        <li class="breadcrumb-item">
+          <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a routerLink="/employees" routerLinkActive="active">Employees</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          {{pageModel.pageMode.toLowerCase()}}
+        </li>
       </ol>
     </nav>
 
     <div class="col-3" *ngIf="isDetailsMode()">
-      <button type="button"
-              class="btn btn-lg btn-outline-secondary mr-3"
+      <button type="button" class="btn btn-lg btn-outline-secondary mr-3"
               routerLink="/employees/edit/{{currentEmployee.id}}">Edit</button>
-      <button type="button"
-              class="btn btn-lg btn-outline-secondary"
-              (click)="onDeleted()">Deleted</button>
+      <button type="button" class="btn btn-lg btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">Deleted</button>
     </div>
   </div>
 
@@ -24,29 +27,36 @@
     <div class="header">Contact information</div>
     <div class="form-row">
       <div class="form-group col-md-6">
-        <app-input-text placeholder="" [form]="employeeForm" id="firstName" label="First name" [showErrors]="showError"></app-input-text>
+        <app-input-text placeholder="" [form]="employeeForm" id="firstName"
+                        label="First name" [showErrors]="showError"></app-input-text>
       </div>
       <div class="form-group col-md-6">
-        <app-input-text placeholder="" [form]="employeeForm" id="lastName" label="Last name" [showErrors]="showError"></app-input-text>
+        <app-input-text placeholder="" [form]="employeeForm" id="lastName"
+                        label="Last name" [showErrors]="showError"></app-input-text>
       </div>
     </div>
     <div class="form-row">
       <div class="form-group col-md-8">
-        <app-input-text placeholder="" [form]="employeeForm" id="company" label="Company" [showErrors]="showError"></app-input-text>
+        <app-input-text placeholder="" [form]="employeeForm" id="company"
+                        label="Company" [showErrors]="showError"></app-input-text>
       </div>
       <div class="form-group col-md-4">
-        <app-input-select id="status" [form]="employeeForm" label="Status" [showErrors]="showError" [mapOptions]="statusMap"></app-input-select>
+        <app-input-select [form]="employeeForm" id="status" label="Status"
+                          [showErrors]="showError" [mapOptions]="selectStatusMap"></app-input-select>
       </div>
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
-        <app-input-text placeholder="" [form]="employeeForm" id="email" label="Email" [showErrors]="showError"></app-input-text>
+        <app-input-text placeholder="" [form]="employeeForm" id="email"
+                        label="Email" [showErrors]="showError"></app-input-text>
       </div>
       <div class="form-group col-md-4">
-        <app-input-text placeholder="" [form]="employeeForm" id="phoneNumber" label="Phone" [showErrors]="showError"></app-input-text>
+        <app-input-text placeholder="" [form]="employeeForm" id="phoneNumber"
+                        label="Phone" [showErrors]="showError"></app-input-text>
       </div>
       <div class="form-group col-md-2">
-        <app-input-text placeholder="YYYY-MM-DD" [form]="employeeForm" id="dateOfBirth" label="Birth Date" [showErrors]="showError" mask="0000-00-00"></app-input-text>
+        <app-input-text placeholder="YYYY-MM-DD" [form]="employeeForm" id="dateOfBirth"
+                        label="Birth Date" [showErrors]="showError" mask="0000-00-00"></app-input-text>
       </div>
     </div>
 
@@ -54,24 +64,30 @@
 
       <div class="form-row">
         <div class="form-group col-md-6">
-          <app-input-text placeholder="" [form]="employeeForm" id="street" label="Street" [showErrors]="showError"></app-input-text>
+          <app-input-text placeholder="" [form]="employeeForm" id="street"
+                          label="Street" [showErrors]="showError"></app-input-text>
         </div>
         <div class="form-group col-md-4">
-          <app-input-text placeholder="" [form]="employeeForm"  id="buildingNumber" label="Building number" [showErrors]="showError"></app-input-text>
+          <app-input-text placeholder="" [form]="employeeForm"  id="buildingNumber"
+                          label="Building number" [showErrors]="showError"></app-input-text>
         </div>
         <div class="form-group col-md-2">
-          <app-input-text placeholder="" [form]="employeeForm"  id="flatNumber" label="Flat number" [showErrors]="showError"></app-input-text>
+          <app-input-text placeholder="" [form]="employeeForm"  id="flatNumber"
+                          label="Flat number" [showErrors]="showError"></app-input-text>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
-          <app-input-text placeholder="" [form]="employeeForm" id="city" label="City" [showErrors]="showError"></app-input-text>
+          <app-input-text placeholder="" [form]="employeeForm" id="city"
+                          label="City" [showErrors]="showError"></app-input-text>
         </div>
         <div class="form-group col-md-4">
-          <app-input-text placeholder="__-___" [form]="employeeForm" id="postalCode" label="Postal code" [showErrors]="showError" mask="00-000"></app-input-text>
+          <app-input-text placeholder="__-___" [form]="employeeForm" id="postalCode"
+                          label="Postal code" [showErrors]="showError" mask="00-000"></app-input-text>
         </div>
         <div class="form-group col-md-2">
-          <app-input-text placeholder="" [form]="employeeForm"  id="country" label="Country" [showErrors]="showError"></app-input-text>
+          <app-input-text placeholder="" [form]="employeeForm"  id="country"
+                          label="Country" [showErrors]="showError"></app-input-text>
         </div>
       </div>
 
@@ -81,16 +97,41 @@
         <button class="btn btn-lg btn-primary" [routerLink]="onCancel()">Cancel</button>
       </div>
       <div class="col-3">
-        <button *ngIf="isCreateMode()" type="submit" class="btn btn-lg btn-primary" [disabled]="!employeeForm.valid">Create</button>
-        <button *ngIf="isEditMode()" type="submit" class="btn btn-lg btn-primary" [disabled]="!employeeForm.valid">Update</button>
+        <button *ngIf="!isDetailsMode()" type="submit" class="btn btn-lg btn-primary"
+                [disabled]="!employeeForm.valid">
+          <div *ngIf="isCreateMode()">Create</div>
+          <div *ngIf="isEditMode()">Update</div>
+        </button>
       </div>
     </div>
   </form>
-
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete employee</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete this employee?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="onDeleted()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<p>{{employeeForm.get('firstName').errors | json}}</p>
-<p> {{ employeeForm.value | json}}</p>
-<p>MODE IS: {{ pageModel | json }}</p>
-<p> {{employee$| async| json}}</p>
-<p *ngFor="let a of statusMap | keyvalue"> {{a.key + "-" + a.value}}</p>
+
+
+
+<!--<p>{{employeeForm.get('firstName').errors | json}}</p>-->
+<!--<p> {{ employeeForm.value | json}}</p>-->
+<!--<p>MODE IS: {{ pageModel | json }}</p>-->
+<!--<p> {{employee$| async| json}}</p>-->
+<!--<p *ngFor="let a of selectStatusMap | keyvalue"> {{a.key + "-" + a.value}}</p>-->

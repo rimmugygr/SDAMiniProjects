@@ -6,9 +6,10 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Actions, ofActionSuccessful, Select, Store} from '@ngxs/store';
 import {EmployeesState} from '../../../shared/state/employees/employees.state';
 import {Employee, EmployeeStatus} from '../../../shared/model/employee.model';
-import {CreateEmployee, UpdateEmployee} from '../../../shared/state/employees/employees.actions';
+import {CreateEmployee, DeleteEmployee, UpdateEmployee} from '../../../shared/state/employees/employees.actions';
 import {Observable} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
+import {toNormalText} from '../../../shared/util/getNormalText';
 
 @Component({
   selector: 'app-employees-form',
@@ -20,8 +21,7 @@ export class EmployeesFormComponent implements OnInit {
   employeeForm: FormGroup;
   currentEmployee: Employee;
   showError = false;
-  isSuccessAction = true;
-  statusMap: Record<string, string> = {...EmployeeStatus};
+  selectStatusMap: Record<string, string>;
 
   employee$: Observable<Employee>;
 
@@ -44,10 +44,6 @@ export class EmployeesFormComponent implements OnInit {
     this.pageModel = getPageModel(this.activatedRoute);
     this.initForm();
     this.initStatus();
-    this.action.pipe(ofActionSuccessful(CreateEmployee)).subscribe(
-      result => this.isSuccessAction = true
-    );
-
   }
 
   private initForm(): void {
@@ -105,6 +101,7 @@ export class EmployeesFormComponent implements OnInit {
   }
 
   onDeleted(): void {
+    this.store.dispatch(new DeleteEmployee({id: this.employeeForm.value.id}));
   }
 
   onCancel(): string {
@@ -142,15 +139,13 @@ export class EmployeesFormComponent implements OnInit {
   }
 
   private initStatus(): void {
-    this.statusMap = {...EmployeeStatus};
+    this.selectStatusMap = {...EmployeeStatus};
     for (const key of Object.keys(EmployeeStatus)) {
-      this.statusMap[key] = this.toNormalText(this.statusMap[key]);
+      this.selectStatusMap[key] = toNormalText(this.selectStatusMap[key]);
     }
   }
 
-  private toNormalText(text: string): string {
-    return text.slice(0, 1).toUpperCase() + text.slice(1).toLowerCase().split('_').join('\n');
-  }
+
 
 
 }

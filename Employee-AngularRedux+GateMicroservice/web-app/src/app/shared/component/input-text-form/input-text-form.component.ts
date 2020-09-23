@@ -3,10 +3,10 @@ import {FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-input-text',
-  templateUrl: './input-text.component.html',
-  styleUrls: ['./input-text.component.css']
+  templateUrl: './input-text-form.component.html',
+  styleUrls: ['./input-text-form.component.css']
 })
-export class InputTextComponent implements OnInit {
+export class InputTextFormComponent implements OnInit {
 
   @Input() id: string;
   @Input() label: string;

@@ -1,7 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 @import './fonts.css';
 
+/*$body-bg: #fafafa;*/
+
+@import "../node_modules/bootstrap";
+
 body {
   font-family: 'Montserrat', serif;
   font-weight: normal;
+  background: whitesmoke;
+}
+.breadcrumb {
+  background-color: inherit;
 }

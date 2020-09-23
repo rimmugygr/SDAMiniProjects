@@ -3,14 +3,13 @@ import {FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-input-select',
-  templateUrl: './input-select.component.html',
-  styleUrls: ['./input-select.component.css']
+  templateUrl: './select-form.component.html',
+  styleUrls: ['./select-form.component.css']
 })
-export class InputSelectComponent implements OnInit {
+export class SelectFormComponent implements OnInit {
 
   @Input() id: string;
   @Input() label: string;
-  @Input() placeholder = '';
   @Input() form: FormGroup;
   @Input() showErrors: boolean;
   @Input() mapOptions: Record<string, string>;

@@ -12,6 +12,7 @@ import {
 } from '../../shared/state/employees/employees.actions';
 import {debounceTime} from 'rxjs/operators';
 import {faPlus} from '@fortawesome/free-solid-svg-icons/faPlus';
+import {toNormalText} from '../../shared/util/getNormalText';
 
 
 @Component({
@@ -23,8 +24,7 @@ export class EmployeesComponent implements OnInit {
   icons = {
     faPlus
   };
-
-  employeesStatusEnum = EmployeeStatus;
+  selectStatusMap: Record<string, string>;
 
   private searchSubject = new Subject<string>();
   searchAction$ = this.searchSubject.asObservable()
@@ -42,9 +42,7 @@ export class EmployeesComponent implements OnInit {
   ngOnInit(): void {
     // this.employees$ = this.store.select(EmployeesState.getEmployees);
     this.store.dispatch( new FetchEmployees());
-
-
-
+    this.initStatus();
   }
 
   onSelectEmployeeStatus(status: string): void {
@@ -65,6 +63,13 @@ export class EmployeesComponent implements OnInit {
 
   onInputSearchText(text: string): void {
     this.searchSubject.next(text);
+  }
+
+  private initStatus(): void {
+    this.selectStatusMap = {...EmployeeStatus, '': 'All status'};
+    for (const key of Object.keys(EmployeeStatus)) {
+      this.selectStatusMap[key] = toNormalText(this.selectStatusMap[key]) + ' status';
+    }
   }
 }
 

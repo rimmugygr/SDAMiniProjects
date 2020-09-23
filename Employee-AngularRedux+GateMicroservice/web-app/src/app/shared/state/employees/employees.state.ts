@@ -6,7 +6,7 @@ import {
   DisplayPageActual,
   DisplaySearchText,
   DisplayStatus, UpdateEmployee,
-  FetchEmployees
+  FetchEmployees, DeleteEmployee
 } from './employees.actions';
 import {Employee} from '../../model/employee.model';
 import {Injectable} from '@angular/core';
@@ -110,8 +110,9 @@ export class EmployeesState{
     return this.employeesService.postEmployee(action.payload.employee).pipe(
       tap(data => {
         const employees = [... ctx.getState().employees, data];
-        ctx.patchState({recentlyAddedEmployees: [data, ...ctx.getState().recentlyAddedEmployees]});
         ctx.patchState({employees});
+        // ctx.setState(patch({ employees: insertItem(response) }));
+        ctx.patchState({recentlyAddedEmployees: [data, ...ctx.getState().recentlyAddedEmployees]});
         ctx.patchState({companies: this.employeesService.getAllCompanies(employees)});
         ctx.dispatch(new DisplayEmployees());
       }),
@@ -124,8 +125,23 @@ export class EmployeesState{
     return this.employeesService.putEmployee(action.payload.employee).pipe(
       tap((data: Employee) => {
         const employees = [... ctx.getState().employees].map(x =>  x.id === data.id ? data : x);
-        ctx.patchState({recentlyEditedEmployees: [data, ...ctx.getState().recentlyEditedEmployees]});
         ctx.patchState({employees});
+        // ctx.setState(patch({ employees: updateItem(emp => emp.id === response.id, response) }));
+        ctx.patchState({recentlyEditedEmployees: [data, ...ctx.getState().recentlyEditedEmployees]});
+        ctx.patchState({companies: this.employeesService.getAllCompanies(employees)});
+        ctx.dispatch(new DisplayEmployees());
+      }),
+    );
+  }
+
+  @Action(DeleteEmployee)
+  public deleteEmployee(ctx: StateContext<EmployeesStateModel>, action: DeleteEmployee): any {
+    return this.employeesService.deleteEmployee(action.payload.id).pipe(
+      tap((data: Employee) => {
+        const employees = [... ctx.getState().employees].filter(x =>  x.id !== data.id);
+        ctx.patchState({employees});
+        // ctx.setState(patch({ employees: removeItem((emp: Employee) => emp.id === response.id) }));
+        ctx.patchState({recentlyEditedEmployees: [data, ...ctx.getState().recentlyDeletedEmployees]});
         ctx.patchState({companies: this.employeesService.getAllCompanies(employees)});
         ctx.dispatch(new DisplayEmployees());
       }),

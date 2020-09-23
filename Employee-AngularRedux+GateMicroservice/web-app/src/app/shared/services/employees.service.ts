@@ -6,7 +6,7 @@ import {environment} from '../../../environments/environment';
 import {Pageable} from '../model/pageable.model';
 import {DisplayEmployee} from '../state/employees/employees.state';
 
-const  headers = new HttpHeaders({ 'Content-Type': 'application/json', key: 'Origin', 'Access-Control-Allow-Origin': 'http://localhost:4200' });
+const  headers = new HttpHeaders({ 'Content-Type': 'application/json'});
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,6 @@ export class EmployeesService {
   private host = environment.host;
   private employeeService = `${this.host}/api/v1/employees-service`;
   private baseEmployeesUrl = `${this.employeeService}/employees`;
-  private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient) { }
 
@@ -29,6 +28,10 @@ export class EmployeesService {
 
   putEmployee(employee: Employee): Observable<Employee> {
     return this.http.put<Employee>(`${this.baseEmployeesUrl}/${employee.id}`, employee, {headers});
+  }
+
+  deleteEmployee(id: string): Observable<Employee> {
+    return this.http.delete<Employee>(`${this.baseEmployeesUrl}/${id}`);
   }
 
   getDisplayEmployees(display: DisplayEmployee, employees: Employee []): {employees: Employee[], pageMax: number} {
@@ -55,14 +58,13 @@ export class EmployeesService {
   }
 
   private isTextInName(employee: Employee, searchText: string): boolean {
-    const searchTextLower = searchText.toLowerCase();
+    const searchTextLower = searchText?.toLowerCase();
     return employee.lastName?.toLowerCase().includes(searchTextLower) || employee.firstName?.toLowerCase().includes(searchTextLower);
   }
 
   private getDisplayPageMax(displayPageSize: number, employees: Employee[]): number {
     return Math.ceil(employees.length / displayPageSize );
   }
-
 }
 
 

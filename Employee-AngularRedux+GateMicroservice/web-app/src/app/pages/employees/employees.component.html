@@ -21,22 +21,24 @@
   <div class="list-group">
     <div class="form-row">
       <div class="form-group col-md-12">
-        <input placeholder="Search by name ..." type="text" [value]="display.displaySearchText" class="form-control" (keyup)="onInputSearchText(selectSearch.value)" #selectSearch>
+        <input class="form-control" placeholder="Search by name ..." type="text" [value]="display.displaySearchText"
+               (keyup)="onInputSearchText(selectSearch.value)" #selectSearch>
       </div>
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
         <select class="form-control" (change)="onSelectEmployeeStatus(selectStatus.value)" #selectStatus>
-          <option value="" [selected]="display.displayStatus === null">All status</option>
-          <option *ngFor="let employeeStatus of employeesStatusEnum | keyvalue" [value]="employeeStatus.key" [selected]="display.displayStatus === employeeStatus.key" >
-            {{  employeeStatus.key.toLowerCase().split('_').join('\n') }} status
+          <option *ngFor="let employeeStatus of selectStatusMap | keyvalue" [value]="employeeStatus.key"
+                  [selected]="display.displayStatus === employeeStatus.key">
+            {{  employeeStatus.value }}
           </option>
         </select>
       </div>
       <div class="form-group col-md-6">
         <select class="form-control" (change)="onSelectEmployeeCompany(selectCompany.value)" #selectCompany>
           <option value=""  [selected]="display.displayCompany === null">All company</option>
-          <option *ngFor="let company of companies$ | async" [value]="company" [selected]="display.displayCompany === company" >
+          <option *ngFor="let company of companies$ | async" [value]="company"
+                  [selected]="display.displayCompany === company">
             {{ company }} company
           </option>
         </select>
@@ -62,7 +64,7 @@
         <div class="col-3">{{employee.phoneNumber}}<br>{{employee.email}}</div>
         <div class="col-2">{{employee.company}}</div>
         <div class="col-2">{{employee.status}}</div>
-        <div class="col-2">&nbsp;</div>
+        <div class="col-2">{{employee.lastModifiedDate}}</div>
       </div>
     </a>
     <a class="list-group-item list-group-item-action disabled" *ngFor="let item of [].constructor(display.displayPageSize-display.displayEmployees.length)">
@@ -82,7 +84,8 @@
       <li class="page-item" [ngClass]="{'disabled': display.displayPageActual === 1}">
         <a class="page-link" (click)="onSelectPage(display.displayPageActual - 1)">Previous</a>
       </li>
-      <li class="page-item" (click)="onSelectPage(i+1)" *ngFor="let item of [].constructor(display.displayPageMax); let i = index"
+      <li class="page-item" (click)="onSelectPage(i+1)"
+          *ngFor="let item of [].constructor(display.displayPageMax); let i = index"
           [ngClass]="{'disabled': display.displayPageActual === (i+1)}">
         <a class="page-link" >{{i+1}}</a>
       </li>

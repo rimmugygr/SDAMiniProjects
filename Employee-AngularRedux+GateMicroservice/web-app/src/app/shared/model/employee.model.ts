@@ -8,6 +8,7 @@ export interface Employee {
   company: string;
   status: EmployeeStatus;
   address: Address;
+  lastModifiedDate: string;
 }
 
 export interface Address {

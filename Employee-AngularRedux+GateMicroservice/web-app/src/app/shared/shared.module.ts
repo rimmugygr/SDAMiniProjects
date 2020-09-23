@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {ReactiveFormsModule} from '@angular/forms';
 import {NgxMaskModule} from 'ngx-mask';
-import { InputTextComponent } from './component/input-text/input-text.component';
-import { InputSelectComponent } from './component/input-select/input-select.component';
+import { InputTextFormComponent } from './component/input-text-form/input-text-form.component';
+import { SelectFormComponent } from './component/select-form/select-form.component';
 
 
 
 @NgModule({
-  declarations: [InputTextComponent, InputSelectComponent],
+  declarations: [InputTextFormComponent, SelectFormComponent],
   imports: [
     CommonModule,
     FontAwesomeModule,
@@ -21,8 +21,8 @@ import { InputSelectComponent } from './component/input-select/input-select.comp
     ReactiveFormsModule,
     NgxMaskModule,
     CommonModule,
-    InputTextComponent,
-    InputSelectComponent,
+    InputTextFormComponent,
+    SelectFormComponent,
   ]
 
 })
